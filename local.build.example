@@ -1,0 +1,5 @@
+<!-- NAnt build file. -*- nxml -*- -->
+<project>
+  <property name="config.name" value="mono" />
+</project>
+

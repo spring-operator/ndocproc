@@ -1,0 +1,34 @@
+<doc>
+  <members>
+    <member name="N:net.lshift.ndocproc.examples.one">
+            <summary>Donec laoreet arcu lobortis sem. Mauris
+            elementum. Aenean feugiat magna vitae urna. Cras
+            posuere. Vestibulum nec risus. Duis et erat. In
+            purus. Aliquam sed est. Maecenas molestie lacus id
+            arcu. Duis nibh. Praesent arcu est.</summary>
+    </member>
+    <member name="N:net.lshift.ndocproc.examples.two">
+            <summary>Suspendisse potenti. Etiam consectetuer ante eu
+            dui. Etiam semper. Aliquam vel nulla vel lorem lacinia.
+            </summary>
+    </member>
+    <member name="N:net.lshift.ndocproc.examples.twopointoh">
+      <summary>Examples of .NET 2.0 generics.</summary>
+    </member>
+    <member name="N:net.lshift.ndocproc.examples.interfaces">
+      <summary>Definitions exploring combinations of interfaces.</summary>
+    </member>
+    <member name="N:net.lshift.ndocproc.examples.genericdelegates">
+      <summary>Definitions exploring combinations of genericity and out/ref/array parameters.</summary>
+    </member>
+    <member name="N:net.lshift.ndocproc.examples.suppressed">
+      <summary>Documentation for this namespace should not be generated - cf net.lshift.ndocproc.examples.notsuppressed.</summary>
+    </member>
+    <member name="N:net.lshift.ndocproc.examples.notsuppressed">
+      <summary>Documentation for this namespace should be generated - cf net.lshift.ndocproc.examples.suppressed.</summary>
+    </member>
+    <member name="N:">
+      <summary>Toplevel namespace.</summary>
+    </member>
+  </members>
+</doc>

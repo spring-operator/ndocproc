@@ -1,0 +1,234 @@
+<html>
+  <head>
+    <title>NDocProc - Javadocish documentation for .NET</title>
+    <link rel="stylesheet" rev="stylesheet" href="../xsl/style.css" type="text/css"/>
+  </head>
+  <body>
+    <h1>NDocProc - Javadocish documentation for .NET</h1>
+
+    <h2>Introduction</h2>
+
+    <p>
+      There are a few tools for building <a
+      href="http://java.sun.com/j2se/javadoc/">javadoc</a>-like
+      documentation for .NET code available out there on the
+      'net. Unfortunately, the major contenders (e.g. <a
+      href="http://ndoc.sourceforge.net/">NDoc</a>, <a
+      href="http://www.sandcastledocs.com/">Sandcastle</a>) suffer
+      from a few flaws: they are variously not free (gratis), not free
+      (libre), not cross-platform, not maintained, and/or not
+      easy-to-use.
+    </p>
+
+    <ul>
+      <li>Tiny. Simple.</li>
+      <li>Very easy to extend, repair, or modify.</li>
+      <li>
+	Very easy to produce output with a custom appearance, via XSLT
+	and CSS stylesheets.
+      </li>
+    </ul>
+
+    <ul>
+      <li>
+	Uses google's "I'm Feeling Lucky" for types it doesn't know
+	about! (This works surprisingly well.)
+      </li>
+      <li>
+	Uses Microsoft's XML documentation comments (see <a
+	href="http://msdn.microsoft.com/msdnmag/issues/02/06/XMLC/">here</a>
+	and <a
+	href="http://msdn2.microsoft.com/EN-US/library/b2s063f7(VS.80).aspx">here</a>)
+      </li>
+      <li>Runs on Mono as well as Microsoft's .NET</li>
+    </ul>
+
+    <ul>
+      <li>
+	Doesn't format the comments into HTML very nicely yet - for
+	the most part, simply transposes them into the HTML without
+	modification. The "&lt;para&gt;" tag is the only current
+	exception.
+      </li>
+      <li>
+	Support for generics is present, but minimal. There are
+	certain to be things I've forgotten.
+      </li>
+    </ul>
+
+    <h2>Downloading</h2>
+
+    <p>
+      NDocProc is available as a <a
+      href="http://www.selenic.com/mercurial/">mercurial</a>
+      repository:
+    </p>
+
+    <pre>
+      hg clone http://hg.opensource.lshift.net/ndocproc
+    </pre>
+
+    <p>
+      Occasional source/binary snapshots are made, and are usually
+      found buried somewhere on <a
+      href="http://www.lshift.net/~tonyg/">this page</a> (look for
+      <code>ndocproc-YYYYMMDDHHMM.zip</code>). Periodic
+      NDocProc-related announcements will be made on the <a
+      href="http://www.lshift.net/blog/category/lshift-sw/">"our
+      software" category of LShift's blog</a>.
+    </p>
+
+    <h2>Open-source license</h2>
+
+<pre>
+Copyright (c) 2007, LShift Ltd. &lt;query@lshift.net&gt;
+Copyright (c) 2007, Tony Garnock-Jones &lt;tonyg@kcbbs.gen.nz&gt;
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+</pre>
+
+    <h2>Examples</h2>
+
+    <ul>
+      <li>
+	The documentation for class <a
+	href="../build/doc/examples/html/type-net.lshift.ndocproc.examples.one.OneHello.html">OneHello</a>
+	illustrates many of the features of NDocProc's output.
+      </li>
+      <li>
+	<a href="../build/doc/examples/html/">html/</a> - the HTML
+	output by the XSLT stylesheets that come with NDocProc
+      </li>
+    </ul>
+
+    <ul>
+      <li>
+	<a href="../build/doc/examples/xml/">xml/</a> - the XML output
+	by the NDocProc program
+      </li>
+      <li>
+	<a href="../src/examples/Examples.cs">Examples.cs</a> - C#
+	source code containing the example documentation
+      </li>
+      <li>
+	<a href="../src/examples/namespaces.xml">namespaces.xml</a> -
+	handwritten documentation for the namespaces in the example
+	project
+      </li>
+      <li>
+	<a href="../build/doc/examples/examples.xml">examples.xml</a>
+	- generated from Examples.cs by the <code>/doc</code> option
+	to <code>csc</code> or <code>mcs</code>
+      </li>
+    </ul>
+
+    <p>
+      For an example of driving NDocProc from within a <a
+      href="http://nant.sourceforge.net/">NAnt</a> build script, see
+      <a href="../default.build">the NDocProc build script</a>, which
+      includes a target called <code>examples</code> which
+    </p>
+    <ol>
+      <li>compiles Examples.cs with <code>/doc</code></li>
+      <li>processes the resulting XML, and namespaces.xml, with NDocProc</li>
+      <li>transforms the resulting XML into HTML with XSLT stylesheets</li>
+    </ol>
+
+    <h2>Compiling</h2>
+
+    <p>
+      You will need:
+    </p>
+
+    <ul>
+      <li>
+	<a href="http://www.mono-project.com/">Mono</a>, or Microsoft
+	<a href="http://msdn2.microsoft.com/en-us/netframework/default.aspx">.NET SDK</a>
+      </li>
+      <li><a href="http://nant.sourceforge.net/">NAnt</a> 0.85</li>
+    </ul>
+
+    <p>
+      Once you've downloaded the source, copy
+      <tt>local.build.example</tt> to <tt>local.build</tt>, and edit
+      it to point to one of the files in the <tt>configs</tt>
+      directory.
+    </p>
+
+    <p>
+      The only really interesting setting in a <tt>configs</tt> build
+      file is the <code>target.framework</code> setting, which can be
+      any of
+    </p>
+
+    <ul>
+      <li><code>mono-2.0</code></li>
+      <li><code>dotnet-2.0</code></li>
+    </ul>
+
+    <p>
+      Run NAnt, and it should compile NDocProc.exe and build the
+      example DLL and documentation. Build products will appear in the
+      <tt>build</tt> directory (e.g. <tt>build/bin/ndocproc.exe</tt>).
+    </p>
+
+    <p>
+      To remove build products, run <code>nant clean</code>.
+    </p>
+
+    <h2>Caveats</h2>
+
+    <p>
+      When documenting implementations of interface methods that
+      explicitly specify which interface the method is for, MCS has a
+      bug where the emitted XML documentation uses the wrong
+      namespace. To work around it, fully qualify the interface:
+    </p>
+
+    <pre>
+      using System;
+
+      public class Broken: System.ICloneable {
+        ///&lt;summary&gt;This doc string will not be found, because I
+        ///should have said <b>"System.ICloneable"</b>, even though the
+        ///compiler knows perfectly well that System.ICloneable is
+        ///what I meant.&lt;/summary&gt;
+        public object <b>ICloneable.Clone</b>() {
+	  return null;
+	}
+      }
+
+      public class Fine: ICloneable {
+        ///&lt;summary&gt;This doc string will be found, because I used the
+        ///literal text "System.ICloneable".&lt;/summary&gt;
+        public object <b>System.ICloneable.Clone</b>() {
+	  return null;
+	}
+      }
+    </pre>
+
+    <p>
+      See also <a
+      href="../src/examples/Interfaces.cs">Interfaces.cs</a>, and its
+      <a
+      href="../build/doc/examples/html/namespace-net.lshift.ndocproc.examples.interfaces.html">generated
+      documentation</a>.
+    </p>
+  </body>
+</html>
