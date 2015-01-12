@@ -67,7 +67,7 @@ namespace com.rabbitmq.tools.ndocproc {
         public NDocProc(ArrayList args) {
             Banner();
 
-            while (args.Count > 0 && ((string) args[0]).StartsWith("/")) {
+            while (args.Count > 0 && (((string) args[0]).StartsWith("/no") || ((string) args[0]).StartsWith("/supress"))) {
                 HandleOption((string) args[0]);
                 args.RemoveAt(0);
             }
