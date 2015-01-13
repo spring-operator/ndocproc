@@ -68,7 +68,8 @@ namespace com.rabbitmq.tools.ndocproc {
         public NDocProc(ArrayList args) {
             Banner();
 
-            while (args.Count > 0 && ((string) args[0]).StartsWith("/")) {
+            while (args.Count > 0 && IsOptionName((string)args[0]))
+            {
                 HandleOption((string) args[0]);
                 args.RemoveAt(0);
             }
@@ -88,6 +89,11 @@ namespace com.rabbitmq.tools.ndocproc {
 
             Reflect();
             Generate();
+        }
+
+        private static bool IsOptionName(string s)
+        {
+            return (s.StartsWith("/no") && s.StartsWith("/supress"));
         }
 
         ///////////////////////////////////////////////////////////////////////////
