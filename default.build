@@ -9,10 +9,6 @@
   <property name="doc.dir" value="${build.dir}/doc" />
   <property name="ndocproc.exename" value="${bin.dir}/ndocproc.exe" />
 
-  <property name="examples.doc.dir" value="${doc.dir}/examples" />
-  <property name="examples.xml.dir" value="${examples.doc.dir}/xml" />
-  <property name="examples.html.dir" value="${examples.doc.dir}/html" />
-
   <include buildfile="local.build" />
   <include buildfile="configs/${config.name}.build" />
   <property name="nant.settings.currentframework" value="${target.framework}" />
@@ -25,42 +21,8 @@
     <mkdir dir="${bin.dir}" />
     <csc target="exe" output="${ndocproc.exename}" debug="true">
       <sources>
-	<include name="src/ndocproc/**/*.cs" />
+	<include name="projects/ndocproc/**/*.cs" />
       </sources>
     </csc>
-  </target>
-
-  <target name="examples" description="example DLL and documentation"
-	  depends="build">
-    <mkdir dir="${examples.doc.dir}"/>
-    <csc target="library"
-	 output="${examples.doc.dir}/examples.dll"
-	 doc="${examples.doc.dir}/examples.xml"
-	 debug="${debug}">
-      <sources>
-	<include name="src/examples/**/*.cs" />
-      </sources>
-      <nowarn>
-	<warning number="1591"/>
-      </nowarn>
-    </csc>
-    <delete dir="${examples.xml.dir}" failonerror="false"/>
-    <mkdir dir="${examples.xml.dir}"/>
-    <exec program="${ndocproc.exename}" useruntimeengine="true">
-      <arg value="/nonpublic"/>
-      <arg value="/suppress:net.lshift.ndocproc.examples.suppressed"/>
-      <arg value="${examples.xml.dir}"/>
-      <arg value="${examples.doc.dir}/examples.xml"/>
-      <arg value="src/examples/namespaces.xml"/>
-    </exec>
-    <delete dir="${examples.html.dir}" failonerror="false"/>
-    <mkdir dir="${examples.html.dir}"/>
-    <nant buildfile="xsl/transform-xml.build">
-      <properties>
-	<property name="xml.dir" value="${project::get-base-directory()}/${examples.xml.dir}"/>
-	<property name="html.dir" value="${project::get-base-directory()}/${examples.html.dir}"/>
-      </properties>
-    </nant>
-    <copy file="xsl/style.css" todir="${examples.html.dir}"/>
   </target>
 </project>
