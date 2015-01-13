@@ -1,4 +1,7 @@
 build/*
+bin/*
+obj/*
 local.build
 *.dll
 *.exe
+*.suo
