@@ -1,6 +1,6 @@
 build/*
-bin/*
-obj/*
+projects/ndocproc/bin/*
+projects/ndocproc/obj/*
 local.build
 *.dll
 *.exe
