@@ -162,7 +162,7 @@ namespace com.rabbitmq.tools.ndocproc {
             }
         }
 
-        public class MemberInfoNameComparer: IComparer {
+        public sealed class MemberInfoNameComparer: IComparer {
             int IComparer.Compare(Object a, Object b) {
                 return ((string) ((MemberInfo) a).Name).CompareTo(((MemberInfo) b).Name);
             }
@@ -529,7 +529,7 @@ namespace com.rabbitmq.tools.ndocproc {
             w.WriteEndElement();
         }
 
-        public class TypeComparer: IComparer {
+        public sealed class TypeComparer: IComparer {
             int IComparer.Compare(Object a, Object b) {
                 return ((Type) a).FullName.CompareTo(((Type) b).FullName);
             }
