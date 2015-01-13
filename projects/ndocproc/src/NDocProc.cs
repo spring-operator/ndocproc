@@ -26,6 +26,7 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Xml;
+using System.Linq;
 
 namespace com.rabbitmq.tools.ndocproc {
     public class NDocProc {
@@ -287,8 +288,10 @@ namespace com.rabbitmq.tools.ndocproc {
             w.Flush();
             w.Close();
 
-            foreach (var entry in types) {
-                Type t = (Type) entry.Value;
+            var typesToIterate = types.Values.ToList<Type>();
+            typesToIterate.RemoveAll(t => t.FullName.Contains("<"));
+            foreach (Type t in typesToIterate)
+            {
                 if (NotSuppressed(Namespace(t))) {
                     GenerateTypePage(t);
                 }
@@ -303,7 +306,9 @@ namespace com.rabbitmq.tools.ndocproc {
         }
 
         public void GenerateTypePage(Type t) {
-            XmlWriter w = OpenOut("type-"+t.FullName+".xml");
+            var filename = "type-" + t.FullName + ".xml";
+            Console.WriteLine("Generating page for type {0} at {1}", t.FullName, filename);
+            XmlWriter w = OpenOut(filename);
             w.WriteStartDocument();
             w.WriteStartElement("typedef");
             WriteItemAttributes(w, t);
@@ -351,9 +356,9 @@ namespace com.rabbitmq.tools.ndocproc {
                      in Sorted(t.GetEvents(LiberalFlags), new MemberInfoNameComparer())) {
                 GenerateEventDoc(w, ei);
             }
-            foreach (MethodBase mi
-                     in Sorted(t.GetConstructors(LiberalFlags),
-                               new MemberInfoNameComparer())) {
+            var mbs = Sorted(t.GetConstructors(LiberalFlags), new MemberInfoNameComparer());
+            foreach (MethodBase mi in mbs) {
+                Console.WriteLine("\tProcessing method {0}", mi.Name);
                 GenerateMethodDoc(w, mi);
             }
             foreach (MethodBase mi
@@ -420,12 +425,12 @@ namespace com.rabbitmq.tools.ndocproc {
         public string MethodFullName(MethodBase mi, string shortName) {
             StringBuilder sb = new StringBuilder();
             sb.Append(MaybeInnerFullName(mi.DeclaringType) + "." + shortName);
-            if (mi.ContainsGenericParameters) {
-		int genArgCount = mi.GetGenericArguments().Length;
-		if (genArgCount > 0) {
-		    sb.Append("``");
-		    sb.Append(genArgCount);
-		}
+            if (mi.ContainsGenericParameters && !mi.IsConstructor) {
+		        int genArgCount = mi.GetGenericArguments().Length;
+		        if (genArgCount > 0) {
+		            sb.Append("``");
+		            sb.Append(genArgCount);
+		        }
             }
             bool needComma = false;
             foreach (ParameterInfo pi in mi.GetParameters()) {
@@ -670,7 +675,7 @@ namespace com.rabbitmq.tools.ndocproc {
         }
 
 	public void GenerateGenericArguments(XmlWriter w, MethodBase mi) {
-            if (mi.ContainsGenericParameters) {
+            if (mi.ContainsGenericParameters && !mi.IsConstructor) {
                 GenerateGenericArguments(w,
                                          mi.GetGenericArguments(),
                                          0,
