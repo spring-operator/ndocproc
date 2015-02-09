@@ -94,7 +94,7 @@ namespace com.rabbitmq.tools.ndocproc {
 
         private static bool IsOptionName(string s)
         {
-            return (s.StartsWith("/no") && s.StartsWith("/supress"));
+            return (s.StartsWith("/no") || s.StartsWith("/supress"));
         }
 
         ///////////////////////////////////////////////////////////////////////////
